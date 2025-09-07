@@ -96,13 +96,17 @@ const ProductDetailsPage = () => {
     }
   ];
 
-  // Comparison data with other products (sample - you can expand this)
-  const comparisonData = allData.slice(0, 5).map((row, index) => ({
-    name: `Product ${index + 1}`,
-    Sales: parseFloat(row.Sales || row.sales) || 0,
-    Profit: parseFloat(row.Profit || row.profit) || 0,
-    Expenses: parseFloat(row.TE || row.te || row.Expenses) || 0,
-  }));
+  const comparisonData = allData.slice(0, 5).map((row, index) => {
+    const productName = row["Product Name"] || row["product name"] || row.Product || row.product || `Product ${index + 1}`;
+    const truncatedName = productName.length > 15 ? productName.substring(0, 12) + "..." : productName;
+    
+    return {
+      name: truncatedName,
+      Sales: parseFloat(row.Sales || row.sales) || 0,
+      Profit: parseFloat(row.Profit || row.profit) || 0,
+      Expenses: parseFloat(row.TE || row.te || row.Expenses) || 0,
+    };
+  });
 
   const areaChartConfig = [
     { dataKey: "Sales", color: "#3B82F6" },
@@ -119,7 +123,6 @@ const ProductDetailsPage = () => {
       />
 
       <div className="container mx-auto px-6 py-8">
-        {/* Back Button */}
         <button
           onClick={handleBackToDashboard}
           className="mb-6 flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors"
@@ -128,20 +131,17 @@ const ProductDetailsPage = () => {
           <span>Back to Dashboard</span>
         </button>
 
-        {/* Product Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            {productData.Product || productData.product || `Product ${productIndex + 1}`}
+            {productData["Product Name"] || productData["product name"] || productData.Product || productData.product || `Product ${productIndex + 1}`}
           </h1>
           <p className="text-gray-600">Detailed analysis for this product</p>
         </div>
 
-        {/* Summary Cards */}
         <SummaryCards cards={productSummaryCards} />
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Product Breakdown Pie Chart */}
           <ReusablePieChart
             data={productPieData}
             title="Product Financial Breakdown"

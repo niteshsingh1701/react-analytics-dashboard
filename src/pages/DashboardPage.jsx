@@ -1,24 +1,22 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BarChart3, Bot, DollarSign, Package, ShoppingBag } from "lucide-react";
+import { useCsvData } from "../hooks/useCsvData";
 
 import {
   NavigationBar,
   ReusablePieChart,
   ReusableAreaChart,
   SummaryCards,
+  Sidebar,
 } from "../components/common";
 
 const DashboardPage = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const csvData = useMemo(
-    () => location.state?.csvData || [],
-    [location.state?.csvData]
-  );
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const { csvData } = useCsvData();
+  //   const [activeTab, setActiveTab] = useState("dashboard");
 
   const handleLogout = async () => {
     try {
@@ -59,7 +57,6 @@ const DashboardPage = () => {
     },
   ];
 
-  // Process CSV data for charts - FIXED CALCULATION
   const chartData = useMemo(() => {
     if (csvData.length === 0) return null;
 
@@ -97,10 +94,8 @@ const DashboardPage = () => {
       0
     );
 
-    // ✅ Remaining = Sales - (Profit + Expenses)
     const remaining = Math.max(totalSales - (totalProfit + totalExpenses), 0);
 
-    // ✅ Pie chart shows parts of Sales, not Sales itself
     const pieData = [
       { name: "Profit", value: totalProfit, color: "#10B981" }, // green
       { name: "Expenses", value: totalExpenses, color: "#EF4444" }, // red
@@ -172,12 +167,12 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation bar */}
       <NavigationBar
         title="Dashboard"
         currentUser={currentUser}
         onLogout={handleLogout}
       />
+      
 
       {csvData.length === 0 ? (
         <div className="container mx-auto px-6 py-8">
@@ -187,32 +182,18 @@ const DashboardPage = () => {
               📁 No data uploaded yet
             </p>
             <p className="text-gray-600 mt-2">
-              Please upload a CSV file to view the dashboard with charts and
-              clickable table.
+              Upload a CSV file to view the dashboard with charts and clickable
+              table. Click here{" "}
+              <Link to="/upload" className="text-blue-600 underline">
+                Upload
+              </Link>
+              .
             </p>
           </div>
         </div>
       ) : (
         <div className="flex">
-          {/* Sidebar */}
-          <div className="w-64 bg-white shadow-lg min-h-screen">
-            <nav className="mt-6">
-              {sidebarTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center px-6 py-3 text-left hover:bg-gray-100 transition-colors ${
-                    activeTab === tab.id
-                      ? "bg-blue-50 border-r-4 border-blue-500 text-blue-700"
-                      : "text-gray-700"
-                  }`}
-                >
-                  <span className="mr-3 text-lg">{tab.icon}</span>
-                  <span className="font-medium">{tab.name}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
+          <Sidebar tabs={sidebarTabs} activeTab="dashboard" useRouter={true} />
 
           {/* Main Content */}
           <div className="flex-1 p-6">
@@ -221,10 +202,8 @@ const DashboardPage = () => {
                 Data Analytics
               </h2>
 
-              {/* Interactive Charts Section - AREA CHART IMPLEMENTATION */}
               {chartData && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                  {/* PIE CHART - Using Reusable Component */}
                   <ReusablePieChart
                     data={chartData.pieData}
                     title="Financial Overview"
@@ -232,7 +211,6 @@ const DashboardPage = () => {
                     height={350}
                   />
 
-                  {/* AREA CHART - Using Reusable Component */}
                   <ReusableAreaChart
                     data={chartData.areaData}
                     title="Product Performance Trends"
@@ -242,10 +220,8 @@ const DashboardPage = () => {
                 </div>
               )}
 
-              {/* Summary Cards */}
               {chartData && <SummaryCards cards={chartData.summaryCardsData} />}
 
-              {/* Data Table Section */}
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
                   Uploaded Data ({csvData.length} records) - Click any row for

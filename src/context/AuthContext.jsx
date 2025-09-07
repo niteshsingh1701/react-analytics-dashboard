@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("✅ Google sign-in successful:", result.user.email);
+      console.log("Google sign-in successful:", result.user.email);
       return result.user;
     } catch (error) {
-      console.error("❌ Google sign-in error:", error);
+      console.error("Google sign-in error:", error);
       throw error;
     }
   };
@@ -28,9 +28,9 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await signOut(auth);
-      console.log("✅ User signed out");
+      console.log("User signed out");
     } catch (error) {
-      console.error("❌ Sign out error:", error);
+      console.error("Sign out error:", error);
       throw error;
     }
   };
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
-      console.log("🔄 Auth state changed:", user ? user.email : "No user");
+      console.log("State changed:", user ? user.email : "No user");
     });
 
     return unsubscribe;

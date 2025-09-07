@@ -8,14 +8,14 @@ import {
   Legend,
 } from "recharts";
 
-const ReusablePieChart = ({ 
-  data, 
-  title = "Chart", 
+const ReusablePieChart = ({
+  data,
+  title = "Chart",
   colors = ["#3B82F6", "#10B981", "#EF4444"],
-  width = "100%", 
+  width = "100%",
   height = 350,
   outerRadius = 100,
-  showPercentage = true
+  showPercentage = true,
 }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -27,16 +27,16 @@ const ReusablePieChart = ({
           <Pie
             data={data}
             cx="50%"
-            cy="45%"
+            cy="50%"
             labelLine={false}
             label={({ name, percent }) => {
-              if (showPercentage) {
+              if (showPercentage && percent > 0.05) {
+                // Only show label if slice is > 5%
                 return `${name}: ${(percent * 100).toFixed(1)}%`;
-              } else {
-                return name;
               }
+              return "";
             }}
-            outerRadius={outerRadius}
+            outerRadius={Math.min(outerRadius, 120)}
             fill="#8884d8"
             dataKey="value"
             strokeWidth={2}
@@ -45,15 +45,12 @@ const ReusablePieChart = ({
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={colors[index % colors.length]}
+                fill={entry.fill || colors[index % colors.length]}
               />
             ))}
           </Pie>
           <Tooltip
-            formatter={(value) => [
-              `$${value.toLocaleString()}`,
-              "",
-            ]}
+            formatter={(value) => [`$${value.toLocaleString()}`, ""]}
             labelStyle={{ color: "#374151" }}
             contentStyle={{
               backgroundColor: "#f9fafb",
