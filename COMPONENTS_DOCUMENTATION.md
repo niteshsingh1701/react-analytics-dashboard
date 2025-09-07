@@ -2,6 +2,54 @@
 
 This document explains how to use the reusable components created for the dashboard application.
 
+## Sidebar Component
+
+A reusable sidebar navigation component for consistent navigation across pages.
+
+### Props:
+- `tabs` (array, required) - Array of tab objects with `id`, `name`, and `icon`
+- `activeTab` (string, required) - The currently active tab ID
+- `onTabChange` (function, required) - Function to handle tab changes
+- `className` (string, optional) - Additional CSS classes
+- `width` (string, default: "w-64") - Width of the sidebar
+
+### Tab Object Structure:
+- `id` (string) - Unique identifier for the tab
+- `name` (string) - Display name for the tab
+- `icon` (JSX) - Icon component for the tab
+
+### Usage:
+```jsx
+import { Sidebar } from "../components/common";
+import { BarChart3, Bot, DollarSign } from "lucide-react";
+
+const sidebarTabs = [
+  {
+    id: "dashboard",
+    name: "Dashboard", 
+    icon: <BarChart3 className="w-5 h-5" />
+  },
+  {
+    id: "chatbot",
+    name: "Chatbot",
+    icon: <Bot className="w-5 h-5" />
+  },
+  {
+    id: "profit", 
+    name: "Profit",
+    icon: <DollarSign className="w-5 h-5" />
+  }
+];
+
+const [activeTab, setActiveTab] = useState("dashboard");
+
+<Sidebar 
+  tabs={sidebarTabs}
+  activeTab={activeTab}
+  onTabChange={setActiveTab}
+/>
+```
+
 ## NavigationBar Component
 
 A reusable navigation bar component for consistent header across pages.
@@ -31,7 +79,7 @@ import { NavigationBar } from "../components/common";
 />
 ```
 
-## ReusablePieChart Component
+## PieChart Component
 
 A configurable pie chart component using Recharts.
 
@@ -46,7 +94,7 @@ A configurable pie chart component using Recharts.
 
 ### Usage:
 ```jsx
-import { ReusablePieChart } from "../components/common";
+import { PieChart } from "../components/common";
 
 const pieData = [
   { name: "Profit", value: 1000, color: "#10B981" },
@@ -54,7 +102,7 @@ const pieData = [
   { name: "Other", value: 300, color: "#F59E0B" },
 ];
 
-<ReusablePieChart
+<PieChart
   data={pieData}
   title="Financial Overview"
   colors={["#10B981", "#EF4444", "#F59E0B"]}
@@ -62,7 +110,7 @@ const pieData = [
 />
 ```
 
-## ReusableAreaChart Component
+## AreaChart Component
 
 A configurable area chart component using Recharts.
 
@@ -79,7 +127,7 @@ A configurable area chart component using Recharts.
 
 ### Usage:
 ```jsx
-import { ReusableAreaChart } from "../components/common";
+import { AreaChart } from "../components/common";
 
 const areaData = [
   { name: "Product 1", Sales: 1000, Profit: 300, Expenses: 200 },
@@ -92,7 +140,7 @@ const areaConfig = [
   { dataKey: "Expenses", color: "#EF4444" }
 ];
 
-<ReusableAreaChart
+<AreaChart
   data={areaData}
   title="Product Performance"
   areas={areaConfig}
@@ -166,9 +214,10 @@ You can import all components at once:
 ```jsx
 import { 
   NavigationBar, 
-  ReusablePieChart, 
-  ReusableAreaChart, 
-  SummaryCards 
+  PieChart, 
+  AreaChart, 
+  SummaryCards,
+  Sidebar 
 } from "../components/common";
 ```
 
@@ -176,6 +225,6 @@ Or import individually:
 
 ```jsx
 import NavigationBar from "../components/common/NavigationBar";
-import ReusablePieChart from "../components/common/ReusablePieChart";
+import Sidebar from "../components/common/Sidebar";
 // etc.
 ```
