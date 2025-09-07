@@ -101,7 +101,6 @@ function ChatBotPage() {
   const handleSendMessage = () => {
     if (inputMessage.trim() === "") return;
 
-    // Add user message
     const userMessage = {
       id: messages.length + 1,
       text: inputMessage,
@@ -116,7 +115,6 @@ function ChatBotPage() {
     setInputMessage("");
     setIsTyping(true);
 
-    // Simulate bot typing and response
     setTimeout(() => {
       const botResponse = {
         id: messages.length + 2,
@@ -139,14 +137,12 @@ function ChatBotPage() {
     }
   };
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation bar */}
       <NavigationBar
         title="Chatbot"
         currentUser={currentUser}
@@ -154,13 +150,10 @@ function ChatBotPage() {
       />
 
       <div className="flex">
-        {/* Sidebar */}
         <Sidebar tabs={sidebarTabs} activeTab="chatbot" useRouter={true} />
 
-        {/* Main Content - Chat Interface */}
         <div className="flex-1 p-6">
           <div className="max-w-full mx-auto h-[calc(100vh-120px)] flex flex-col">
-            {/* Chat Header */}
             <div className="bg-white rounded-t-lg shadow-md p-4 border-b">
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">

@@ -66,7 +66,6 @@ function AmazonPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation bar */}
       <NavigationBar
         title="Amazon Integration"
         currentUser={currentUser}
@@ -74,7 +73,6 @@ function AmazonPage() {
       />
 
       <div className="flex">
-        {/* Sidebar */}
         <Sidebar tabs={sidebarTabs} activeTab="amazon" useRouter={true} />
 
         {/* Main Content */}

@@ -57,7 +57,6 @@ const DashboardPage = () => {
     },
   ];
 
-  // Process CSV data for charts - FIXED CALCULATION
   const chartData = useMemo(() => {
     if (csvData.length === 0) return null;
 
@@ -95,10 +94,8 @@ const DashboardPage = () => {
       0
     );
 
-    // ✅ Remaining = Sales - (Profit + Expenses)
     const remaining = Math.max(totalSales - (totalProfit + totalExpenses), 0);
 
-    // ✅ Pie chart shows parts of Sales, not Sales itself
     const pieData = [
       { name: "Profit", value: totalProfit, color: "#10B981" }, // green
       { name: "Expenses", value: totalExpenses, color: "#EF4444" }, // red
@@ -170,7 +167,6 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation bar */}
       <NavigationBar
         title="Dashboard"
         currentUser={currentUser}
@@ -197,7 +193,6 @@ const DashboardPage = () => {
         </div>
       ) : (
         <div className="flex">
-          {/* Sidebar */}
           <Sidebar tabs={sidebarTabs} activeTab="dashboard" useRouter={true} />
 
           {/* Main Content */}

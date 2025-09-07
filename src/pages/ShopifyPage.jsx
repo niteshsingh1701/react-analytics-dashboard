@@ -66,7 +66,6 @@ function ShopifyPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation bar */}
       <NavigationBar
         title="Shopify Integration"
         currentUser={currentUser}
@@ -74,7 +73,6 @@ function ShopifyPage() {
       />
 
       <div className="flex">
-        {/* Sidebar */}
         <Sidebar tabs={sidebarTabs} activeTab="shopify" useRouter={true} />
 
         {/* Main Content */}
