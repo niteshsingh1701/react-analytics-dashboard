@@ -1,12 +1,32 @@
-# React + Vite
+# React Analytics Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based analytics dashboard with Google Authentication, file upload capabilities, and interactive data visualizations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 **Google Authentication** with Firebase
+- 📊 **File Upload** - Support for CSV/Excel files
+- 📈 **Interactive Dashboard** - Charts, tables, and analytics
+- 🔄 **Redux State Management** - Persistent data across routes
+- 📱 **Responsive Design** - Mobile-first with Tailwind CSS
+- 🎯 **Product Analytics** - Detailed product-wise insights
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19** + **Vite** - Modern development setup
+- **Firebase** - Authentication and backend services
+- **Redux Toolkit** - State management
+- **Recharts** - Data visualization
+- **Tailwind CSS** - Styling
+- **React Router** - Navigation
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up Firebase configuration in `.env`
+4. Start development server: `npm run dev`
+
+## Required CSV Columns
+
+Product Name, Sales, Profit, TE, Credit, Amazon Fee, Profit Percentage
